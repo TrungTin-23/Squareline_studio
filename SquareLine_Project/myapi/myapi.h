@@ -14,18 +14,18 @@
 #include <stdbool.h>
 
 typedef struct {
-    double temperature;
-    double humidity;
-    double sound;
-    double co2;
-    double co;
-    double tvocs;
-    double pm25;
-    double pm10;
-    double nh3;
-    double ch4;
-    int iaq;
-    char status[10];
+    float temperature;
+    float humidity;
+    float sound;
+    float co2;
+    float co;
+    float tvocs;
+    float pm25;
+    float pm10;
+    float nh3;
+    float ch4;
+    float IAQ;
+    //char status[10];
 } SensorData;
 size_t WriteCallback(void *ptr, size_t size, size_t nmemb, void *userdata);
 // Function to make API request and return response

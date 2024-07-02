@@ -79,8 +79,8 @@ int main(int argc, char **argv)
 
   ui_init();
   // lv_obj_add_event_cb(ui_Switchlight1, ChangeButton1, LV_EVENT_CLICKED, NULL);
-  //lv_obj_add_event_cb(ui_Switchlight1, ChangeButton1, LV_EVENT_VALUE_CHANGED, NULL);   
-  //lv_obj_add_event_cb(ui_Switchlight2, ChangeButton2, LV_EVENT_VALUE_CHANGED, NULL);
+   //lv_obj_add_event_cb(ui_Switch1, ChangeButton1, LV_EVENT_VALUE_CHANGED, NULL);   
+   //lv_obj_add_event_cb(ui_Switch2, ChangeButton2, LV_EVENT_VALUE_CHANGED, NULL);
   lv_timer_create(update_sensor_data_task, 500, NULL);  // 1000ms = 1 giây
   //lv_timer_create(update_weather, 1000, NULL);  // 1000ms = 1 giây
   //lv_timer_t * timer = lv_timer_create(update_sensor_data_task, 500, NULL);
@@ -91,7 +91,8 @@ int main(int argc, char **argv)
       //update_icon_weather();
       //printf("hello");
       lv_timer_handler();
-      //  usleep(5 * 1000);
+
+        usleep(5 * 1000);
      // usleep(5 * 1000);
       //sleep(5);
   

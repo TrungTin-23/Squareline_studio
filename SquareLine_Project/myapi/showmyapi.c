@@ -71,45 +71,116 @@ void update_sensor_data_task(lv_timer_t * timer) {
     char*response = AIot();
     fetch_all_sensor_data(response, &sensorData);
     printf("L");
-            // Cập nhật các nhãn với giá trị mới
+    // Cập nhật các nhãn với giá trị mới
     //dust=sensorData.dust;
     sound=sensorData.sound;
-    lv_label_set_text_fmt(ui_NumHumdity, "%.1f", sensorData.humidity);
-    lv_label_set_text_fmt(ui_NumTemp, " %.1f", sensorData.temperature);
-    lv_label_set_text_fmt(ui_NumCo2, " %.1f", sensorData.co2);
-    lv_label_set_text_fmt(ui_NumTVOCs, " %.1f", sensorData.tvocs);
-    lv_label_set_text_fmt(ui_NumCH4, " %.1f", sensorData.ch4);
-    lv_label_set_text_fmt(ui_NumCO, " %.1f", sensorData.co);
-    lv_label_set_text_fmt(ui_NumPM25, "%.3f", sensorData.pm25);
-    lv_label_set_text_fmt(ui_NumPM10, "%.3f", sensorData.pm10);
-    lv_label_set_text_fmt(ui_NumIAQ, " %d", sensorData.iaq);
-    if (sensorData.iaq >= 0 && sensorData.iaq <= 50)
+    hum=sensorData.humidity;
+    //printf("7");
+    char humidity_str[10]; // Tạo một mảng ký tự để chứa chuỗi độ ẩm
+    sprintf(humidity_str, "%.2f%%", sensorData.humidity); // Định dạng độ ẩm thành chuỗi
+    lv_label_set_text(ui_NumHumdity, humidity_str); // Cập nhật nhãn với chuỗi độ ẩm
+
+    char temp_str[10];
+    sprintf(temp_str, "%.2f", sensorData.temperature);
+    lv_label_set_text(ui_NumTemp, temp_str);
+// //lv_obj_invalidate(ui_NumTemp);
+
+//     char co2_str[64];
+//     // printf("11");
+//     sprintf(co2_str, "%.1f", sensorData.co2);
+//     lv_label_set_text(ui_NumCo2, co2_str);
+// // // //lv_obj_invalidate(ui_NumCo2);
+
+    // char tvocs_str[64];
+    // sprintf(tvocs_str, "%.1f", sensorData.tvocs);
+    // lv_label_set_text(ui_NumTVOCs, tvocs_str);
+// // //     //lv_obj_invalidate(ui_NumTVOCs);
+
+//     char ch4_str[64];
+//     sprintf(ch4_str, "%.1f", sensorData.ch4);
+//     lv_label_set_text(ui_NumCH4, ch4_str);
+// //lv_obj_invalidate(ui_NumCH4);
+
+//     char co_str[64];
+//     sprintf(co_str, "%.1f", sensorData.co);
+//     lv_label_set_text(ui_NumCO, co_str);
+// //lv_obj_invalidate(ui_NumCO);
+
+//     char pm25_str[64];
+//     sprintf(pm25_str, "%.3f", sensorData.pm25);
+//     lv_label_set_text(ui_NumPM25, pm25_str);
+// // //lv_obj_invalidate(ui_NumPM25);
+
+//     char pm10_str[64];
+//     sprintf(pm10_str, "%.3f", sensorData.pm10);
+//     lv_label_set_text(ui_NumPM10, pm10_str);
+// // //lv_obj_invalidate(ui_NumPM10);
+
+//     char nh3_str[64];
+//     sprintf(nh3_str, "%.3f", sensorData.nh3);
+//     lv_label_set_text(ui_NumNH3, nh3_str);
+
+    char aqi_str[64];
+    sprintf(aqi_str, "%.2f", sensorData.IAQ); 
+    lv_label_set_text(ui_NumAQI, aqi_str);
+//lv_obj_invalidate(ui_NumAQI);
+    if (sensorData.IAQ >= 0 && sensorData.IAQ <= 50)
     {
     lv_label_set_text(ui_Good, "GOOD");
     }   
-    else if (sensorData.iaq >= 51 && sensorData.iaq <= 100)
+    else if (sensorData.IAQ >= 51 && sensorData.IAQ <= 100)
     {
     lv_label_set_text(ui_Good, "MODERATE");
     }
-    else if (sensorData.iaq >= 101 && sensorData.iaq <= 150)
+    else if (sensorData.IAQ >= 101 && sensorData.IAQ <= 150)
     {
     lv_label_set_text(ui_Good, "UNSAFE FOR SENSITIVE");
     }
-    else if (sensorData.iaq >= 151 && sensorData.iaq <= 200)
+    else if (sensorData.IAQ >= 151 && sensorData.IAQ <= 200)
     {
     lv_label_set_text(ui_Good, "UNHEALTHY");
     }
-    else if (sensorData.iaq >= 201 && sensorData.iaq <= 300)
+    else if (sensorData.IAQ >= 201 && sensorData.IAQ <= 300)
     {
     lv_label_set_text(ui_Good, "VERY UNHEALTHY");
     }
-    else if (sensorData.iaq >= 301 && sensorData.iaq <= 500)
+    else if (sensorData.IAQ >= 301 && sensorData.IAQ <= 500)
     {
     lv_label_set_text(ui_Good, "HARZARDOUS");
     }
      
 
-    }
+    }else{
+    // Cập nhật các giá trị còn lại: ui_NumCo2, ui_NumCH4, ui_NumCO, ui_NumPM25, ui_NumPM10, và ui_NumNH3
+     char* response = AIot();
+    fetch_all_sensor_data(response, &sensorData);
+    char tvocs_str[64];
+    sprintf(tvocs_str, "%.1f", sensorData.tvocs);
+    lv_label_set_text(ui_NumTVOCs, tvocs_str);
+    char co2_str[64];
+    sprintf(co2_str, "%.1f", sensorData.co2);
+    lv_label_set_text(ui_NumCo2, co2_str);
+
+    char ch4_str[64];
+    sprintf(ch4_str, "%.1f", sensorData.ch4);
+    lv_label_set_text(ui_NumCH4, ch4_str);
+
+    char co_str[64];
+    sprintf(co_str, "%.1f", sensorData.co);
+    lv_label_set_text(ui_NumCO, co_str);
+
+    char pm25_str[64];
+    sprintf(pm25_str, "%.3f", sensorData.pm25);
+    lv_label_set_text(ui_NumPM25, pm25_str);
+
+    char pm10_str[64];
+    sprintf(pm10_str, "%.3f", sensorData.pm10);
+    lv_label_set_text(ui_NumPM10, pm10_str);
+
+    char nh3_str[64];
+    sprintf(nh3_str, "%.3f", sensorData.nh3);
+    lv_label_set_text(ui_NumNH3, nh3_str);
+}
     switch(hour)
     {
         // case 10: 
@@ -180,7 +251,7 @@ void update_button1(lv_timer_t * timer)
                         printf ("\nOK");
 
                 }
-                else if(ssL1 ==true&&L1==false)
+                else if(ssL1 ==true&&L2==false)
                 {   
                     printf("\nxoa icon");
                     // button1=false;
@@ -188,7 +259,7 @@ void update_button1(lv_timer_t * timer)
                     lv_event_send(ui_Switch1, LV_EVENT_VALUE_CHANGED, NULL); // Gửi sự kiện VALUE CHANGED sau khi thay đổi trạng thái
                 }
 
-                else if(ssL1==false&&L1==true)
+                else if(ssL1==false&&L2==true)
                 {   
                     printf("\n set lại icon");
                     lv_obj_add_state(ui_Switch1, LV_STATE_CHECKED); 
